@@ -38,19 +38,19 @@
     </v-app-bar>
 
     <v-main>
-      <HelloWorld/>
+      <upload/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Upload from './components/Upload.vue';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Upload
   },
 
   data: () => ({

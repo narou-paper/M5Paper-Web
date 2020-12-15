@@ -1,0 +1,81 @@
+<template>
+  <v-container>
+    <v-row class="text-center">
+      <v-col class="mb-4">
+        <h1 class="display-2 font-weight-bold mb-3">Welcome to ほっとここあ</h1>
+
+        <p class="subheading font-weight-regular">
+          あああああああああああああああああああああ,
+          <br />なんかいい感じの説明
+          <a href="https://youtu.be/r78ZX-_fDds" target="_blank"
+            >なんかいい感じのリンク</a
+          >
+        </p>
+      </v-col>
+
+      <v-col cols="12">
+        <v-file-input
+          @change="change"
+          accept=".pdf"
+          truncate-length="15"
+        />
+      </v-col>
+
+      <v-btn block depressed color="primary"> UPLOAD </v-btn>
+
+      <canvas ref="canvas" />
+
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import PDFJS from 'pdfjs-dist'
+
+export default {
+  name: "Upload",
+  methods: {
+    // https://qiita.com/kazu_death/items/f29b110cb2d4b482ff94
+    async change(file) {
+      console.log(file)
+      const fileData = await this.readFileAsync(file)
+
+      console.log(PDFJS)
+
+      // PDFファイルのパース
+      const pdf = await PDFJS.getDocument({
+        data: fileData,
+        cMapUrl: '/cmaps/',
+        cMapPacked: true,
+      })
+
+      // 1ページ目をcanvasにレンダリング
+      const page = await pdf.getPage(1)
+      const canvas = this.$refs.canvas
+      const viewport = page.getViewport({ scale: 1 })
+      canvas.height = viewport.height
+      canvas.width = viewport.width
+      const context = canvas.getContext('2d')
+      var task = page.render({
+        canvasContext: context,
+        viewport: viewport,
+      })
+      await task.promise
+    },
+    readFileAsync(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => {
+          resolve(reader.result)
+        }
+        reader.onerror = reject
+        reader.readAsArrayBuffer(file)
+      })
+    },
+
+    upload() {
+
+    },
+  },
+};
+</script>

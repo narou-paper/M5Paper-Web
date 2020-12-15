@@ -8,10 +8,12 @@ module.exports = {
   },
   "css": {
     "extract": {
-      "filename": "[name].css"
+      "filename": "[name].css",
+      "chunkFilename": "[name].css"
     }
   },
   "transpileDependencies": [
-    "vuetify"
-  ]
+    "vuetify",
+  ],
+  productionSourceMap: process.env.NODE_ENV === 'production' ? false : true,
 }

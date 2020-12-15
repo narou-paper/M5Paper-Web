@@ -14,29 +14,70 @@
       </v-col>
 
       <v-col cols="12">
+        <v-form>
+          <v-file-input
+            @change="changeBMP"
+            @click:clear="pictures.splice(0)"
+            accept=".bmp"
+            truncate-length="15"
+            multiple
+            show-size=""
+          />
+          <v-btn block depressed color="primary"> UPLOAD </v-btn>
+        </v-form>
+      </v-col>
+      <v-row>
+        <v-col
+          v-for="(picture, index) in pictures"
+          :key="index"
+          class="d-flex child-flex"
+          cols="4" >
+          <v-img :src="picture" />
+        </v-col>
+      </v-row>
+      <!-- <v-col cols="12">
         <v-file-input
-          @change="change"
+          @change="changePDF"
           accept=".pdf"
           truncate-length="15"
         />
       </v-col>
 
-      <v-btn block depressed color="primary"> UPLOAD </v-btn>
 
-      <canvas ref="canvas" />
-
+      <canvas ref="canvas" /> -->
     </v-row>
   </v-container>
 </template>
 
 <script>
-import PDFJS from 'pdfjs-dist'
+import PDFJS from "pdfjs-dist";
 
 export default {
   name: "Upload",
+  data() {
+    return {
+      pictures: []
+    };
+  },
   methods: {
+    // https://qiita.com/itoshiki/items/511d58b827f4ce2129fc
+    async changeBMP(files) {
+      // this.picture = await this.getBase64(files[0])
+      for (let i = 0; i < files.length; i++) {
+        const picture = await this.getBase64(files[i]);
+        this.pictures.push(picture);
+      }
+    },
+    getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    },
     // https://qiita.com/kazu_death/items/f29b110cb2d4b482ff94
-    async change(file) {
+    async changePDF(file) {
       console.log(file)
       const fileData = await this.readFileAsync(file)
 

@@ -14,16 +14,48 @@
       </v-col>
 
       <v-col cols="12">
-        <v-form>
-          <v-file-input
-            @change="changeBMP"
-            @click:clear="pictures.splice(0)"
-            accept=".bmp"
-            truncate-length="15"
-            multiple
-            show-size=""
-          />
-          <v-btn block depressed color="primary"> UPLOAD </v-btn>
+        <v-form
+          action="http://esp32fs.local/"
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <label>
+            <v-text-field
+              name="title"
+              label="title"
+              />
+          </label>
+          <label>
+            <v-text-field
+              name="episode"
+              label="episode"
+              />
+          </label>
+          <label>
+            <v-text-field
+              name="subtitle"
+              label="subtitle"
+              />
+          </label>
+          <label>
+            <v-file-input
+              name="files"
+              @change="changeBMP"
+              @click:clear="pictures.splice(0)"
+              accept="image/*"
+              truncate-length="15"
+              label="files"
+              multiple
+              show-size=""
+            />
+          </label>
+          <v-btn
+            type="submit"
+            color="primary"
+            block
+            depressed>
+            UPLOAD
+          </v-btn>
         </v-form>
       </v-col>
       <v-row>

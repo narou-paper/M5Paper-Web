@@ -15,40 +15,32 @@
 
       <v-col cols="12">
         <v-form
-          action="http://esp32fs.local/"
+          action="/"
           method="post"
           enctype="multipart/form-data"
         >
-          <label>
-            <v-text-field
-              name="title"
-              label="title"
-              />
-          </label>
-          <label>
-            <v-text-field
-              name="episode"
-              label="episode"
-              />
-          </label>
-          <label>
-            <v-text-field
-              name="subtitle"
-              label="subtitle"
-              />
-          </label>
-          <label>
-            <v-file-input
-              name="files"
-              @change="changeBMP"
-              @click:clear="pictures.splice(0)"
-              accept="image/*"
-              truncate-length="15"
-              label="files"
-              multiple
-              show-size=""
-            />
-          </label>
+          <v-text-field
+            name="title"
+            label="title"
+          />
+          <v-text-field
+            name="episode"
+            label="episode"
+          />
+          <v-text-field
+            name="subtitle"
+            label="subtitle"
+          />
+          <v-file-input
+            @change="changeBMP"
+            @click:clear="pictures.splice(0)"
+            accept="image/*"
+            truncate-length="15"
+            name="file"
+            label="files"
+            multiple
+            show-size
+          />
           <v-btn
             type="submit"
             color="primary"

@@ -74,8 +74,6 @@
 </template>
 
 <script>
-import PDFJS from "pdfjs-dist";
-
 export default {
   name: "Upload",
   data() {
@@ -99,48 +97,7 @@ export default {
         reader.onload = () => resolve(reader.result);
         reader.onerror = (error) => reject(error);
       });
-    },
-    // https://qiita.com/kazu_death/items/f29b110cb2d4b482ff94
-    async changePDF(file) {
-      console.log(file)
-      const fileData = await this.readFileAsync(file)
-
-      console.log(PDFJS)
-
-      // PDFファイルのパース
-      const pdf = await PDFJS.getDocument({
-        data: fileData,
-        cMapUrl: '/cmaps/',
-        cMapPacked: true,
-      })
-
-      // 1ページ目をcanvasにレンダリング
-      const page = await pdf.getPage(1)
-      const canvas = this.$refs.canvas
-      const viewport = page.getViewport({ scale: 1 })
-      canvas.height = viewport.height
-      canvas.width = viewport.width
-      const context = canvas.getContext('2d')
-      var task = page.render({
-        canvasContext: context,
-        viewport: viewport,
-      })
-      await task.promise
-    },
-    readFileAsync(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => {
-          resolve(reader.result)
-        }
-        reader.onerror = reject
-        reader.readAsArrayBuffer(file)
-      })
-    },
-
-    upload() {
-
-    },
-  },
+    }
+  }
 };
 </script>

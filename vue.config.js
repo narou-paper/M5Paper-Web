@@ -1,18 +1,24 @@
+const CompressionPlugin = require('compression-webpack-plugin');
+
 module.exports = {
-  "publicPath": "",
-  "configureWebpack": {
-    "output": {
-      "filename": "[name].js",
-      "chunkFilename": "[name].js"
+  chainWebpack(config) {
+    config.plugins.delete('prefetch');
+    config.plugin('CompressionPlugin').use(CompressionPlugin);
+  },
+  publicPath: "",
+  configureWebpack: {
+    output: {
+      filename: "[name].js",
+      chunkFilename: "[name].js"
     }
   },
-  "css": {
-    "extract": {
-      "filename": "[name].css",
-      "chunkFilename": "[name].css"
+  css: {
+    extract: {
+      filename: "[name].css",
+      chunkFilename: "[name].css"
     }
   },
-  "transpileDependencies": [
+  transpileDependencies: [
     "vuetify",
   ],
   productionSourceMap: process.env.NODE_ENV === 'production' ? false : true,

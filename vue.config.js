@@ -1,12 +1,11 @@
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
-  chainWebpack(config) {
-    config.plugins.delete('prefetch');
-    config.plugin('CompressionPlugin').use(CompressionPlugin);
-  },
   publicPath: "",
   configureWebpack: {
+    plugins: [
+      new CompressionPlugin()
+    ],
     output: {
       filename: "[name].js",
       chunkFilename: "[name].js"

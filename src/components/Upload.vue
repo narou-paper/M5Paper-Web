@@ -32,7 +32,7 @@
             label="subtitle"
           />
           <v-file-input
-            @change="changeBMP"
+            @change="changeImage"
             @click:clear="pictures.splice(0)"
             accept="image/*"
             truncate-length="15"
@@ -59,16 +59,6 @@
           <v-img :src="picture" />
         </v-col>
       </v-row>
-      <!-- <v-col cols="12">
-        <v-file-input
-          @change="changePDF"
-          accept=".pdf"
-          truncate-length="15"
-        />
-      </v-col>
-
-
-      <canvas ref="canvas" /> -->
     </v-row>
   </v-container>
 </template>
@@ -83,7 +73,7 @@ export default {
   },
   methods: {
     // https://qiita.com/itoshiki/items/511d58b827f4ce2129fc
-    async changeBMP(files) {
+    async changeImage(files) {
       // this.picture = await this.getBase64(files[0])
       for (let i = 0; i < files.length; i++) {
         const picture = await this.getBase64(files[i]);
